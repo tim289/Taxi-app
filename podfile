@@ -1,0 +1,6 @@
+target ‘Taxi App’ do
+
+    pod 'Fabric'
+    pod 'Crashlytics'
+
+end
