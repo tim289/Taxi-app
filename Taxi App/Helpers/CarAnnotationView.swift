@@ -11,12 +11,12 @@ import MapKit
 
 class CarAnnotationView: MKAnnotationView {
     
-    private var _infoView: InfoCarAnnotationView?
+    fileprivate var _infoView: InfoCarAnnotationView?
     
     var infoView: InfoCarAnnotationView {
         get {
             if _infoView == nil {
-                _infoView = (NSBundle.mainBundle().loadNibNamed("InfoCarAnnotationView", owner: nil, options: nil)[0] as? InfoCarAnnotationView)!
+                _infoView = (Bundle.main.loadNibNamed("InfoCarAnnotationView", owner: nil, options: nil)?[0] as? InfoCarAnnotationView)!
                 return _infoView!
             } else {
                 return _infoView!
@@ -24,14 +24,14 @@ class CarAnnotationView: MKAnnotationView {
         }
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
-        self.superview?.bringSubviewToFront(self)
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        self.superview?.bringSubview(toFront: self)
         
         if (!selected) {
             infoView.removeFromSuperview()
         } else {
             addSubview(infoView)
-            infoView.center = CGPointMake(infoView.frame.size.width/18, -infoView.frame.size.height / 2.0)
+            infoView.center = CGPoint(x: infoView.frame.size.width/18, y: -infoView.frame.size.height / 2.0)
             setDataToInfoView()
         }
     }

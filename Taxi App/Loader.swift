@@ -11,10 +11,10 @@ import MapKit
 
 class Loader: NSObject {
     
-    static private let tempCountCars = 30
-    static private var tempCars = [CarModel]()
+    static fileprivate let tempCountCars = 30
+    static fileprivate var tempCars = [CarModel]()
 
-    static func getCarsWithLocation(currentLocation: CLLocationCoordinate2D,
+    static func getCarsWithLocation(_ currentLocation: CLLocationCoordinate2D,
                                     success: ([CarModel]) -> Void) {
         
         for car in tempCars {
@@ -22,7 +22,7 @@ class Loader: NSObject {
         }
         
         for _ in 0..<tempCountCars - tempCars.count {
-            tempCars.append(CarModel(uid: NSUUID().UUIDString,
+            tempCars.append(CarModel(uid: UUID().uuidString,
                 coordinate: CoordinateGenerator.getCoordinate(nil, currentCoordinate: currentLocation, angle: CarModel().angle)))
         }
         
@@ -31,9 +31,9 @@ class Loader: NSObject {
                 let currentLocation = CLLocation(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
                 let lastLocation = CLLocation(latitude: lastCoordinate.latitude, longitude: lastCoordinate.longitude)
 
-                print("Distance \(car.uid) \(lastLocation.distanceFromLocation(currentLocation))")
-                if lastLocation.distanceFromLocation(currentLocation) > Double(CoordinateGenerator.distance) {
-                    tempCars.removeAtIndex(tempCars.indexOf(car)!)
+                print("Distance \(car.uid) \(lastLocation.distance(from: currentLocation))")
+                if lastLocation.distance(from: currentLocation) > Double(CoordinateGenerator.distance) {
+                    tempCars.remove(at: tempCars.index(of: car)!)
                 }
             }
         }

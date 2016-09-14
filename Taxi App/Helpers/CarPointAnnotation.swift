@@ -13,7 +13,7 @@ class CarPointAnnotation: MKPointAnnotation {
 
     var carModel = CarModel()
     
-    private var _imageName = String()
+    fileprivate var _imageName = String()
     var imageName: String {
         return _imageName
     }
@@ -28,7 +28,7 @@ class CarPointAnnotation: MKPointAnnotation {
         _imageName = imageName
         title = carModel.uid
         
-        subtitle = String(carModel.lastCoordinate)
+        subtitle = String(describing: carModel.lastCoordinate)
         if let lastCoordinate = carModel.lastCoordinate{
             coordinate = lastCoordinate
         }

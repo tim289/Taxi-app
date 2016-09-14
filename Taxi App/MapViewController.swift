@@ -11,11 +11,11 @@ import MapKit
 
 class MapViewController: UIViewController {
 
-    private let carPointAnnotationIdentifier = "carPointAnnotationIdentifier"
+    fileprivate let carPointAnnotationIdentifier = "carPointAnnotationIdentifier"
     
-    @IBOutlet private weak var mapView: MKMapView!
-    private let locationManager = CLLocationManager()
-    private var timer = NSTimer()
+    @IBOutlet fileprivate weak var mapView: MKMapView!
+    fileprivate let locationManager = CLLocationManager()
+    fileprivate var timer = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class MapViewController: UIViewController {
     
     //MARK: Actions
     
-    @IBAction private func currentLocationAction(sender: AnyObject) {
+    @IBAction fileprivate func currentLocationAction(_ sender: AnyObject) {
         setLocation(locationManager.location)
     }
 
@@ -46,7 +46,7 @@ private extension MapViewController {
         
         setLocation(locationManager.location)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(1,
+        timer = Timer.scheduledTimer(timeInterval: 1,
                                                            target: self,
                                                            selector: #selector(updateCars),
                                                            userInfo: nil,
@@ -63,7 +63,7 @@ private extension MapViewController {
         }
     }
     
-    func showCarAnnotations(cars: [CarModel], and annotations: [CarPointAnnotation]) {
+    func showCarAnnotations(_ cars: [CarModel], and annotations: [CarPointAnnotation]) {
         for car in cars {
             let filteredArray = annotations.filter() { $0.carModel.uid == car.uid }
             if filteredArray.count > 0 {
@@ -71,7 +71,7 @@ private extension MapViewController {
                 annotation.carModel = car
                 if let lastCoordinate = car.lastCoordinate {
                     annotation.coordinate = lastCoordinate
-                    if let annotationView = mapView.viewForAnnotation(annotation) as? CarAnnotationView {
+                    if let annotationView = mapView.view(for: annotation) as? CarAnnotationView {
                         annotationView.setDataToInfoView()
                     }
                 }
@@ -106,7 +106,7 @@ private extension MapViewController {
     
     //MARK: Location
     
-    func setLocation(location: CLLocation?) {
+    func setLocation(_ location: CLLocation?) {
         if let currentLocation = location {
             let center = CLLocationCoordinate2D(latitude: currentLocation.coordinate.latitude,
                                                 longitude: currentLocation.coordinate.longitude)
@@ -116,7 +116,7 @@ private extension MapViewController {
     
     func removeMyLocationAnnotation() {
         for annotation in mapView.annotations {
-            if annotation.isKindOfClass(MyLocationPointAnnotation) {
+            if annotation.isKind(of: MyLocationPointAnnotation.self) {
                 mapView.removeAnnotation(annotation)
             }
         }
@@ -126,7 +126,7 @@ private extension MapViewController {
 //MARK: - CLLocationManagerDelegate
 
 extension MapViewController: CLLocationManagerDelegate {
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             let point = MyLocationPointAnnotation()
             point.coordinate = location.coordinate
@@ -142,14 +142,14 @@ extension MapViewController: CLLocationManagerDelegate {
 //MARK: - MKMapViewDelegate
 
 extension MapViewController: MKMapViewDelegate {
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if let annotation = annotation as? CarPointAnnotation {
             
             let identifier = carPointAnnotationIdentifier
             
             var annotationView = CarAnnotationView()
-            if let anView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as! CarAnnotationView? {
+            if let anView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as! CarAnnotationView? {
                 annotationView = anView
                 annotationView.annotation = annotation
             } else {
@@ -157,7 +157,7 @@ extension MapViewController: MKMapViewDelegate {
             }
             
             annotationView.image = UIImage(named: annotation.imageName)
-            annotationView.backgroundColor = UIColor.clearColor()
+            annotationView.backgroundColor = UIColor.clear
             annotationView.canShowCallout = false
             return annotationView
         }

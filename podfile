@@ -1,4 +1,4 @@
-target ‘Taxi App’ do
+target 'Taxi App' do
 
     pod 'Fabric'
     pod 'Crashlytics'

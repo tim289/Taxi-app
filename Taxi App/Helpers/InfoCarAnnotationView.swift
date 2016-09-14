@@ -11,14 +11,14 @@ import MapKit
 
 class InfoCarAnnotationView: UIView {
 
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet fileprivate weak var titleLabel: UILabel!
+    @IBOutlet fileprivate weak var descriptionLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
-    func setData(title: String, description: String) {
+    func setData(_ title: String, description: String) {
         titleLabel.text = title
         descriptionLabel.text = description
     }

@@ -17,12 +17,12 @@ extension MKMapView {
         }
     }
     
-    func setCenterCoordinate(centerCoordinate: CLLocationCoordinate2D, zoomLevel: Int, animated: Bool) {
+    func setCenterCoordinate(_ centerCoordinate: CLLocationCoordinate2D, zoomLevel: Int, animated: Bool) {
         let span = MKCoordinateSpanMake(0, 360/pow(2, Double(zoomLevel)) * Double(self.frame.size.width/256))
         self.setRegion(MKCoordinateRegionMake(centerCoordinate, span), animated: animated)
     }
     
-    func setZoomLevel (zoomLevel: Int) {
+    func setZoomLevel (_ zoomLevel: Int) {
         setCenterCoordinate(self.centerCoordinate, zoomLevel: zoomLevel, animated: false)
     }
 }
