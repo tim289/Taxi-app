@@ -30,7 +30,7 @@ class CarPointAnnotation: MKPointAnnotation {
         
         subtitle = String(describing: carModel.lastCoordinate)
         if let lastCoordinate = carModel.lastCoordinate{
-            coordinate = lastCoordinate
+            coordinate = lastCoordinate.coordinate
         }
     }
 }

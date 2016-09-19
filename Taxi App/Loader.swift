@@ -18,7 +18,7 @@ class Loader: NSObject {
                                     success: ([CarModel]) -> Void) {
         
         for car in tempCars {
-            car.addCoordinate(CoordinateGenerator.getCoordinate(car.lastCoordinate, currentCoordinate: currentLocation, angle: car.angle))
+            car.addCoordinate(CoordinateGenerator.getCoordinate(car.lastCoordinate?.coordinate, currentCoordinate: currentLocation, angle: car.angle))
         }
         
         for _ in 0..<tempCountCars - tempCars.count {
@@ -29,9 +29,9 @@ class Loader: NSObject {
         for car in tempCars {
             if let lastCoordinate = car.lastCoordinate {
                 let currentLocation = CLLocation(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
-                let lastLocation = CLLocation(latitude: lastCoordinate.latitude, longitude: lastCoordinate.longitude)
+                let lastLocation = CLLocation(latitude: lastCoordinate.coordinate.latitude, longitude: lastCoordinate.coordinate.longitude)
 
-                print("Distance \(car.uid) \(lastLocation.distance(from: currentLocation))")
+                //print("Distance \(car.uid) \(lastLocation.distance(from: currentLocation))")
                 if lastLocation.distance(from: currentLocation) > Double(CoordinateGenerator.distance) {
                     tempCars.remove(at: tempCars.index(of: car)!)
                 }

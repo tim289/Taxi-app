@@ -40,7 +40,7 @@ class CarAnnotationView: MKAnnotationView {
         if let annotation = annotation as? CarPointAnnotation {
             var lastCoordinateString = ""
             if let lastCoordinate = annotation.carModel.lastCoordinate {
-                lastCoordinateString = "Latitude: \(String(lastCoordinate.latitude))\n" + "Longitude: " + String(lastCoordinate.longitude)
+                lastCoordinateString = "Latitude: \(String(lastCoordinate.coordinate.latitude))\n" + "Longitude: " + String(lastCoordinate.coordinate.longitude)
             }
             infoView.setData(annotation.carModel.uid, description: lastCoordinateString)
         }

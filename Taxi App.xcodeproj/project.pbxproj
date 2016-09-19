@@ -22,6 +22,7 @@
 		EF4F88121D86E50A003ABA6A /* CarAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F88111D86E50A003ABA6A /* CarAnnotationView.swift */; };
 		EF4F88141D86E626003ABA6A /* InfoCarAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F88131D86E626003ABA6A /* InfoCarAnnotationView.swift */; };
 		EF4F88161D86E633003ABA6A /* InfoCarAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF4F88151D86E633003ABA6A /* InfoCarAnnotationView.xib */; };
+		EF6A9F451D8FBE0D0016ABE6 /* Extrapolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6A9F441D8FBE0D0016ABE6 /* Extrapolation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		EF4F88111D86E50A003ABA6A /* CarAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarAnnotationView.swift; path = Helpers/CarAnnotationView.swift; sourceTree = "<group>"; };
 		EF4F88131D86E626003ABA6A /* InfoCarAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCarAnnotationView.swift; path = Helpers/InfoCarAnnotationView.swift; sourceTree = "<group>"; };
 		EF4F88151D86E633003ABA6A /* InfoCarAnnotationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InfoCarAnnotationView.xib; path = Helpers/InfoCarAnnotationView.xib; sourceTree = "<group>"; };
+		EF6A9F441D8FBE0D0016ABE6 /* Extrapolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extrapolation.swift; sourceTree = "<group>"; };
 		FDAAE603237D8927462CD57C /* libPods-Taxi App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Taxi App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -99,6 +101,7 @@
 				EF4F87F01D867B73003ABA6A /* AppDelegate.swift */,
 				EF4F87F41D867B73003ABA6A /* Main.storyboard */,
 				EF4F880D1D86A39A003ABA6A /* Loader.swift */,
+				EF6A9F441D8FBE0D0016ABE6 /* Extrapolation.swift */,
 				EF4F880B1D869B57003ABA6A /* CoordinateGenerator.swift */,
 				EF4F88081D868CBB003ABA6A /* Models */,
 				EF4F88031D868476003ABA6A /* Helpers */,
@@ -264,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF4F88051D868496003ABA6A /* MKMapView.swift in Sources */,
+				EF6A9F451D8FBE0D0016ABE6 /* Extrapolation.swift in Sources */,
 				EF4F880C1D869B57003ABA6A /* CoordinateGenerator.swift in Sources */,
 				EF4F880A1D868CF1003ABA6A /* CarModel.swift in Sources */,
 				EF4F87F31D867B73003ABA6A /* MapViewController.swift in Sources */,

@@ -13,10 +13,13 @@ class MapViewController: UIViewController {
 
     fileprivate let carPointAnnotationIdentifier = "carPointAnnotationIdentifier"
     
+    fileprivate var cars = [CarModel]()
+    
     @IBOutlet fileprivate weak var mapView: MKMapView!
     fileprivate let locationManager = CLLocationManager()
-    fileprivate var timer = Timer()
-    
+    fileprivate var loadTimer = Timer()
+    fileprivate var extrapolationTimer = Timer()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupData()
@@ -33,6 +36,7 @@ class MapViewController: UIViewController {
 //MARK: - Private Methods
 
 private extension MapViewController {
+   
     func setupData() {
         
         mapView.delegate = self
@@ -46,19 +50,31 @@ private extension MapViewController {
         
         setLocation(locationManager.location)
         
-        timer = Timer.scheduledTimer(timeInterval: 1,
-                                                           target: self,
-                                                           selector: #selector(updateCars),
-                                                           userInfo: nil,
-                                                           repeats: true)
+        loadTimer = Timer.scheduledTimer(timeInterval: 3,
+                                       target: self,
+                                       selector: #selector(updateCars),
+                                       userInfo: nil,
+                                       repeats: true)
         updateCars()
+        
+        extrapolationTimer = Timer.scheduledTimer(timeInterval: 0.1,
+                                                  target: self,
+                                                  selector: #selector(replaceAnnotatinCars),
+                                                  userInfo: nil,
+                                                  repeats: true)
+        replaceAnnotatinCars()
+    }
+    
+    @objc func replaceAnnotatinCars() {
+        removeCarAnnotations(with: cars, and: self.getOnlyCarPointAnnotation())
+        showCarAnnotations(cars, and: self.getOnlyCarPointAnnotation())
     }
     
     @objc func updateCars() {
         if let currentLocation = locationManager.location {
             Loader.getCarsWithLocation(currentLocation.coordinate, success: { (cars) in
-                self.removeCarAnnotations(with: cars, and: self.getOnlyCarPointAnnotation())
-                self.showCarAnnotations(cars, and: self.getOnlyCarPointAnnotation())
+                self.cars = cars
+                self.replaceAnnotatinCars()
             })
         }
     }
@@ -70,7 +86,7 @@ private extension MapViewController {
                 let annotation = filteredArray[0]
                 annotation.carModel = car
                 if let lastCoordinate = car.lastCoordinate {
-                    annotation.coordinate = lastCoordinate
+                    annotation.coordinate = lastCoordinate.coordinate
                     if let annotationView = mapView.view(for: annotation) as? CarAnnotationView {
                         annotationView.setDataToInfoView()
                     }
