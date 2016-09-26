@@ -10,26 +10,25 @@ import Foundation
 import MapKit
 
 class CarPointAnnotation: MKPointAnnotation {
-
-    var carModel = CarModel()
+    
+    var carModel: CarModel
     
     fileprivate var _imageName = String()
     var imageName: String {
         return _imageName
     }
     
-    override init() {
-        super.init()
-    }
     
     init(carModel: CarModel, imageName: String) {
-        super.init()
         self.carModel = carModel
         _imageName = imageName
+        
+        super.init()
+        
         title = carModel.uid
         
-        subtitle = String(describing: carModel.lastCoordinate)
-        if let lastCoordinate = carModel.lastCoordinate{
+        subtitle = String(describing: carModel.lastCoordinateFromRealCoordinates)
+        if let lastCoordinate = carModel.lastCoordinateFromRealCoordinates {
             coordinate = lastCoordinate.coordinate
         }
     }

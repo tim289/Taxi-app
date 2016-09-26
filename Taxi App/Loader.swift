@@ -11,29 +11,32 @@ import MapKit
 
 class Loader: NSObject {
     
-    static fileprivate let tempCountCars = 30
-    static fileprivate var tempCars = [CarModel]()
+    static fileprivate let tempCountCars = 1
+    static fileprivate var tempCars = [CarModelSimulated]()
 
     static func getCarsWithLocation(_ currentLocation: CLLocationCoordinate2D,
                                     success: ([CarModel]) -> Void) {
         
         for car in tempCars {
-            car.addCoordinate(CoordinateGenerator.getCoordinate(car.lastCoordinate?.coordinate, currentCoordinate: currentLocation, angle: car.angle))
+            car.addCoordinate(CoordinateGenerator.getCoordinate(car.lastCoordinateFromRealCoordinates?.coordinate, currentCoordinate: currentLocation, angle: car.angle))
         }
         
         for _ in 0..<tempCountCars - tempCars.count {
-            tempCars.append(CarModel(uid: UUID().uuidString,
-                coordinate: CoordinateGenerator.getCoordinate(nil, currentCoordinate: currentLocation, angle: CarModel().angle)))
+            let car = CarModelSimulated(uid: UUID().uuidString,
+                                        coordinate: nil,
+                                        angle: Double(arc4random()).truncatingRemainder(dividingBy: 360))
+            
+            car.addCoordinate(CoordinateGenerator.getCoordinate(nil, currentCoordinate: currentLocation, angle: car.angle))
+            tempCars.append(car)
         }
         
-        for car in tempCars {
-            if let lastCoordinate = car.lastCoordinate {
+        for car in tempCars.enumerated().reversed() {
+            if let lastCoordinate = car.element.lastCoordinateFromRealCoordinates {
                 let currentLocation = CLLocation(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
                 let lastLocation = CLLocation(latitude: lastCoordinate.coordinate.latitude, longitude: lastCoordinate.coordinate.longitude)
 
-                //print("Distance \(car.uid) \(lastLocation.distance(from: currentLocation))")
                 if lastLocation.distance(from: currentLocation) > Double(CoordinateGenerator.distance) {
-                    tempCars.remove(at: tempCars.index(of: car)!)
+                    tempCars.remove(at: car.offset)
                 }
             }
         }

@@ -74,21 +74,30 @@ private extension MapViewController {
         if let currentLocation = locationManager.location {
             Loader.getCarsWithLocation(currentLocation.coordinate, success: { (cars) in
                 self.cars = cars
-                self.replaceAnnotatinCars()
+                replaceAnnotatinCars()
             })
         }
     }
     
+    // update cars location
     func showCarAnnotations(_ cars: [CarModel], and annotations: [CarPointAnnotation]) {
         for car in cars {
             let filteredArray = annotations.filter() { $0.carModel.uid == car.uid }
             if filteredArray.count > 0 {
                 let annotation = filteredArray[0]
-                annotation.carModel = car
-                if let lastCoordinate = car.lastCoordinate {
+                if let lastCoordinate = car.lastCoordinateWithExtrapolation {
+                    annotation.carModel = car
                     annotation.coordinate = lastCoordinate.coordinate
                     if let annotationView = mapView.view(for: annotation) as? CarAnnotationView {
                         annotationView.setDataToInfoView()
+
+                        if let previousCoordinate = car.previousCoordinateFromAllCoordinates,
+                            let lastCoordinate = car.lastCoordinateFromAllCoordinates {
+                            
+                            let direction = MapHelper.directionBetweenPoints(sourcePoint: MKMapPointForCoordinate(CLLocationCoordinate2DMake(lastCoordinate.coordinate.latitude, lastCoordinate.coordinate.longitude)),
+                                                                             destinationPoint: MKMapPointForCoordinate(CLLocationCoordinate2DMake(previousCoordinate.coordinate.latitude, previousCoordinate.coordinate.longitude)))
+                            annotationView.rotateAnnotationView(toHeading: direction, mapView: mapView)
+                        }
                     }
                 }
             } else {
@@ -97,7 +106,7 @@ private extension MapViewController {
             }
         }
     }
-    
+        
     func getOnlyCarPointAnnotation() -> [CarPointAnnotation] {
         if let annotations = mapView.annotations.filter( { (annotation: MKAnnotation) -> Bool in
             if ((annotation as? CarPointAnnotation) != nil) {
@@ -113,8 +122,7 @@ private extension MapViewController {
     
     func removeCarAnnotations(with cars: [CarModel], and annotations: [CarPointAnnotation]) {
         for annotation in annotations {
-            let filteredArray = cars.filter() { $0.uid == annotation.carModel.uid }
-            if filteredArray.count == 0 {
+            if !cars.contains(annotation.carModel) {
                 mapView.removeAnnotation(annotation)
             }
         }
@@ -159,7 +167,6 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
         if let annotation = annotation as? CarPointAnnotation {
             
             let identifier = carPointAnnotationIdentifier
@@ -180,5 +187,4 @@ extension MapViewController: MKMapViewDelegate {
         
         return nil
     }
-
 }

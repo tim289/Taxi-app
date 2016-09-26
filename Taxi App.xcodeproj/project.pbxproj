@@ -23,6 +23,8 @@
 		EF4F88141D86E626003ABA6A /* InfoCarAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F88131D86E626003ABA6A /* InfoCarAnnotationView.swift */; };
 		EF4F88161D86E633003ABA6A /* InfoCarAnnotationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EF4F88151D86E633003ABA6A /* InfoCarAnnotationView.xib */; };
 		EF6A9F451D8FBE0D0016ABE6 /* Extrapolation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6A9F441D8FBE0D0016ABE6 /* Extrapolation.swift */; };
+		EF851B761D93BCFA00A19A1E /* CarModelSimulated.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF851B751D93BCFA00A19A1E /* CarModelSimulated.swift */; };
+		EF851B791D9515E800A19A1E /* MapHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF851B781D9515E800A19A1E /* MapHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		EF4F88131D86E626003ABA6A /* InfoCarAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCarAnnotationView.swift; path = Helpers/InfoCarAnnotationView.swift; sourceTree = "<group>"; };
 		EF4F88151D86E633003ABA6A /* InfoCarAnnotationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InfoCarAnnotationView.xib; path = Helpers/InfoCarAnnotationView.xib; sourceTree = "<group>"; };
 		EF6A9F441D8FBE0D0016ABE6 /* Extrapolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extrapolation.swift; sourceTree = "<group>"; };
+		EF851B751D93BCFA00A19A1E /* CarModelSimulated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarModelSimulated.swift; path = Models/CarModelSimulated.swift; sourceTree = "<group>"; };
+		EF851B781D9515E800A19A1E /* MapHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapHelper.swift; path = Helpers/MapHelper.swift; sourceTree = "<group>"; };
 		FDAAE603237D8927462CD57C /* libPods-Taxi App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Taxi App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -105,6 +109,7 @@
 				EF4F880B1D869B57003ABA6A /* CoordinateGenerator.swift */,
 				EF4F88081D868CBB003ABA6A /* Models */,
 				EF4F88031D868476003ABA6A /* Helpers */,
+				EF851B771D9515C100A19A1E /* Views */,
 				EF4F88021D867E68003ABA6A /* View Controllers */,
 				EF4F87F71D867B73003ABA6A /* Assets.xcassets */,
 				EF4F87F91D867B73003ABA6A /* LaunchScreen.storyboard */,
@@ -124,12 +129,7 @@
 		EF4F88031D868476003ABA6A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				EF4F88041D868496003ABA6A /* MKMapView.swift */,
-				EF4F88061D868BC6003ABA6A /* MyLocationPointAnnotation.swift */,
-				EF4F880F1D86D33B003ABA6A /* CarPointAnnotation.swift */,
-				EF4F88111D86E50A003ABA6A /* CarAnnotationView.swift */,
-				EF4F88131D86E626003ABA6A /* InfoCarAnnotationView.swift */,
-				EF4F88151D86E633003ABA6A /* InfoCarAnnotationView.xib */,
+				EF851B781D9515E800A19A1E /* MapHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -138,8 +138,22 @@
 			isa = PBXGroup;
 			children = (
 				EF4F88091D868CF1003ABA6A /* CarModel.swift */,
+				EF851B751D93BCFA00A19A1E /* CarModelSimulated.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		EF851B771D9515C100A19A1E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EF4F88041D868496003ABA6A /* MKMapView.swift */,
+				EF4F88061D868BC6003ABA6A /* MyLocationPointAnnotation.swift */,
+				EF4F880F1D86D33B003ABA6A /* CarPointAnnotation.swift */,
+				EF4F88111D86E50A003ABA6A /* CarAnnotationView.swift */,
+				EF4F88131D86E626003ABA6A /* InfoCarAnnotationView.swift */,
+				EF4F88151D86E633003ABA6A /* InfoCarAnnotationView.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,12 +186,14 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = TsimafeiHarhun;
 				TargetAttributes = {
 					EF4F87EC1D867B73003ABA6A = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = Y8WX5PGU96;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -271,10 +287,12 @@
 				EF4F880C1D869B57003ABA6A /* CoordinateGenerator.swift in Sources */,
 				EF4F880A1D868CF1003ABA6A /* CarModel.swift in Sources */,
 				EF4F87F31D867B73003ABA6A /* MapViewController.swift in Sources */,
+				EF851B791D9515E800A19A1E /* MapHelper.swift in Sources */,
 				EF4F88071D868BC6003ABA6A /* MyLocationPointAnnotation.swift in Sources */,
 				EF4F88121D86E50A003ABA6A /* CarAnnotationView.swift in Sources */,
 				EF4F880E1D86A39A003ABA6A /* Loader.swift in Sources */,
 				EF4F88101D86D33B003ABA6A /* CarPointAnnotation.swift in Sources */,
+				EF851B761D93BCFA00A19A1E /* CarModelSimulated.swift in Sources */,
 				EF4F88141D86E626003ABA6A /* InfoCarAnnotationView.swift in Sources */,
 				EF4F87F11D867B73003ABA6A /* AppDelegate.swift in Sources */,
 			);
@@ -316,8 +334,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -361,8 +381,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -381,6 +403,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -390,9 +413,12 @@
 			baseConfigurationReference = 8E7D6F5B72F1C2C94F6238CD /* Pods-Taxi App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Y8WX5PGU96;
 				INFOPLIST_FILE = "Taxi App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "taxi-app.Taxi-App";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = th.com.taxiapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -403,9 +429,12 @@
 			baseConfigurationReference = BDDAAEDA6C686FC3150816ED /* Pods-Taxi App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Y8WX5PGU96;
 				INFOPLIST_FILE = "Taxi App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "taxi-app.Taxi-App";
+				OTHER_SWIFT_FLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = th.com.taxiapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
