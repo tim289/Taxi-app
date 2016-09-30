@@ -51,10 +51,10 @@ private extension MapViewController {
         setLocation(locationManager.location)
         
         loadTimer = Timer.scheduledTimer(timeInterval: 3,
-                                       target: self,
-                                       selector: #selector(updateCars),
-                                       userInfo: nil,
-                                       repeats: true)
+                                         target: self,
+                                           selector: #selector(updateCars),
+                                           userInfo: nil,
+                                           repeats: true)
         updateCars()
         
         extrapolationTimer = Timer.scheduledTimer(timeInterval: 0.1,
@@ -80,11 +80,9 @@ private extension MapViewController {
     }
     
     // update cars location
-    func showCarAnnotations(_ cars: [CarModel], and annotations: [CarPointAnnotation]) {
+    func showCarAnnotations(_ cars: [CarModel], and annotations: [String : CarPointAnnotation]) {
         for car in cars {
-            let filteredArray = annotations.filter() { $0.carModel.uid == car.uid }
-            if filteredArray.count > 0 {
-                let annotation = filteredArray[0]
+            if let annotation = annotations[car.uid] {
                 if let lastCoordinate = car.lastCoordinateWithExtrapolation {
                     annotation.carModel = car
                     annotation.coordinate = lastCoordinate.coordinate
@@ -107,21 +105,18 @@ private extension MapViewController {
         }
     }
         
-    func getOnlyCarPointAnnotation() -> [CarPointAnnotation] {
-        if let annotations = mapView.annotations.filter( { (annotation: MKAnnotation) -> Bool in
-            if ((annotation as? CarPointAnnotation) != nil) {
-                return true
-            } else {
-                return false
+    func getOnlyCarPointAnnotation() -> [String : CarPointAnnotation] {
+        var annotationsDictionary = [String : CarPointAnnotation]()
+        for annotation in mapView.annotations {
+            if let carPointAnnotation = annotation as? CarPointAnnotation {
+                annotationsDictionary[carPointAnnotation.carModel.uid] = carPointAnnotation
             }
-        }) as? [CarPointAnnotation] {
-            return annotations
         }
-        return [CarPointAnnotation]()
+        return annotationsDictionary
     }
     
-    func removeCarAnnotations(with cars: [CarModel], and annotations: [CarPointAnnotation]) {
-        for annotation in annotations {
+    func removeCarAnnotations(with cars: [CarModel], and annotations: [String : CarPointAnnotation]) {
+        for annotation in annotations.values {
             if !cars.contains(annotation.carModel) {
                 mapView.removeAnnotation(annotation)
             }

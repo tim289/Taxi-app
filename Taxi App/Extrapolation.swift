@@ -52,7 +52,7 @@ class Extrapolation: NSObject {
 //                                       lastTime:  lastCoordinate.time.timeIntervalSince1970)
 //        print(correction)
 //
-        return (coordinate: CLLocationCoordinate2DMake(latitude , longitude),
+        return (coordinate: CLLocationCoordinate2DMake(latitude , longitude ),
                 time: Date(),
                 correction: 0.0)
     }
@@ -144,7 +144,6 @@ fileprivate extension Extrapolation {
                                  lastCorrection: Double) -> Double {
         return (-1)*(2*acceptableError*timeCorrection + 2*lastCorrection)/pow(timeCorrection, 3)
     }
-    
 }
 
 
