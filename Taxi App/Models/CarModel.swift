@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import RxSwift
 
 typealias CoordinateInTime = (coordinate: CLLocationCoordinate2D, time: Date, correction: Double) // correction for extrapolation point
 
@@ -27,6 +28,17 @@ class CarModel: NSObject {
         _uid = uid
         if let coordinate = coordinate {
             addCoordinate(coordinate)
+        }
+    }
+    
+    func myFrom<E>(sequence: [E]) -> Observable<E> {
+        return Observable.create { observer in
+            for element in sequence {
+                observer.on(.next(element))
+            }
+            
+            observer.on(.completed)
+            return Disposables.create()
         }
     }
 }

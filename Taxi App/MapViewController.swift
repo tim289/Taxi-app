@@ -14,14 +14,14 @@ class MapViewController: UIViewController {
 
     fileprivate let carPointAnnotationIdentifier = "carPointAnnotationIdentifier"
     
-    fileprivate var cars : Observable<[CarModel]>!
+    fileprivate var cars : Observable<CarModel>!
     
     @IBOutlet fileprivate weak var mapView: MKMapView!
     fileprivate let locationManager = CLLocationManager()
     
-    var loadBag: DisposeBag! = DisposeBag()
+    var disposeBag: DisposeBag! = DisposeBag()
     var loadObservable: Observable<Int>!
-    
+
     var extrapolationBag: DisposeBag! = DisposeBag()
     var extrapolationObservable: Observable<Int>!
 
@@ -59,7 +59,7 @@ private extension MapViewController {
         
         loadObservable.subscribe(onNext: {_ in
             self.updateCars()
-        }).addDisposableTo(loadBag)
+        }).addDisposableTo(disposeBag)
 
         updateCars()
         
@@ -84,32 +84,28 @@ private extension MapViewController {
     }
     
     // update cars location
-    func showCarAnnotations(_ cars: Observable<[CarModel]>, and annotations: [String : CarPointAnnotation]) {
-        
-        let disposeBag = DisposeBag()
-        
-        cars.asObservable().subscribe(onNext: {allCars in
-            for car in allCars {
-                if let annotation = annotations[car.uid] {
-                    if let lastCoordinate = car.lastCoordinateWithExtrapolation {
-                        annotation.carModel = car
-                        annotation.coordinate = lastCoordinate.coordinate
-                        if let annotationView = self.mapView.view(for: annotation) as? CarAnnotationView {
-                            annotationView.setDataToInfoView()
+    func showCarAnnotations(_ cars: Observable<CarModel>, and annotations: [String : CarPointAnnotation]) {
+
+        cars.subscribe(onNext: {car in
+            if let annotation = annotations[car.uid] {
+                if let lastCoordinate = car.lastCoordinateWithExtrapolation {
+                    annotation.carModel = car
+                    annotation.coordinate = lastCoordinate.coordinate
+                    if let annotationView = self.mapView.view(for: annotation) as? CarAnnotationView {
+                        annotationView.setDataToInfoView()
+                        
+                        if let previousCoordinate = car.previousCoordinateFromAllCoordinates,
+                            let lastCoordinate = car.lastCoordinateFromAllCoordinates {
                             
-                            if let previousCoordinate = car.previousCoordinateFromAllCoordinates,
-                                let lastCoordinate = car.lastCoordinateFromAllCoordinates {
-                                
-                                let direction = MapHelper.directionBetweenPoints(sourcePoint: MKMapPointForCoordinate(CLLocationCoordinate2DMake(lastCoordinate.coordinate.latitude, lastCoordinate.coordinate.longitude)),
-                                                                                 destinationPoint: MKMapPointForCoordinate(CLLocationCoordinate2DMake(previousCoordinate.coordinate.latitude, previousCoordinate.coordinate.longitude)))
-                                annotationView.rotateAnnotationView(toHeading: direction, mapView: self.mapView)
-                            }
+                            let direction = MapHelper.directionBetweenPoints(sourcePoint: MKMapPointForCoordinate(CLLocationCoordinate2DMake(lastCoordinate.coordinate.latitude, lastCoordinate.coordinate.longitude)),
+                                                                             destinationPoint: MKMapPointForCoordinate(CLLocationCoordinate2DMake(previousCoordinate.coordinate.latitude, previousCoordinate.coordinate.longitude)))
+                            annotationView.rotateAnnotationView(toHeading: direction, mapView: self.mapView)
                         }
                     }
-                } else {
-                    let car = CarPointAnnotation(carModel: car, imageName: "taxi_ic")
-                    self.mapView.addAnnotation(car)
                 }
+            } else {
+                let car = CarPointAnnotation(carModel: car, imageName: "taxi_ic")
+                self.mapView.addAnnotation(car)
             }
         }).addDisposableTo(disposeBag)
     }
@@ -124,17 +120,16 @@ private extension MapViewController {
         return annotationsDictionary
     }
     
-    func removeCarAnnotations(with cars: Observable<[CarModel]>, and annotations: [String : CarPointAnnotation]) {
-        for annotation in annotations.values {
-            
-            let disposeBag = DisposeBag()
-            
-            cars.asObservable().subscribe(onNext: {allCars in
-                if !allCars.contains(annotation.carModel) {
-                    self.mapView.removeAnnotation(annotation)
-                }
-            }).addDisposableTo(disposeBag)
-        }
+    func removeCarAnnotations(with cars: Observable<CarModel>, and annotations: [String : CarPointAnnotation]) {
+        var annotations = annotations
+     
+         cars.subscribe(onNext: {car in
+            if annotations[car.uid] != nil {
+                annotations.removeValue(forKey: car.uid)
+            }
+        }).addDisposableTo(disposeBag)
+        
+        mapView.removeAnnotations(Array(annotations.values))
     }
     
     //MARK: Location
