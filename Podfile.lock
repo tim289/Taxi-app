@@ -2,15 +2,18 @@ PODS:
   - Crashlytics (3.8.2):
     - Fabric (~> 1.6.3)
   - Fabric (1.6.8)
+  - RxSwift (3.0.0-beta.2)
 
 DEPENDENCIES:
   - Crashlytics (= 3.8.2)
   - Fabric (= 1.6.8)
+  - RxSwift (= 3.0.0-beta.2)
 
 SPEC CHECKSUMS:
   Crashlytics: 27acca95a01b042a8294291dd6dff27f8f6af6d7
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
+  RxSwift: 0ea939d7d97cb70657190ffde8dc2a9b455778fc
 
-PODFILE CHECKSUM: b4b75fdc820e075816913a041211b10ca73dac6d
+PODFILE CHECKSUM: e588b1a035d6d045537e6556aebd5d5c83c0def4
 
 COCOAPODS: 1.0.1

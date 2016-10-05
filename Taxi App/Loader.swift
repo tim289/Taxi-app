@@ -8,39 +8,45 @@
 
 import Foundation
 import MapKit
+import RxSwift
 
 class Loader: NSObject {
     
     static fileprivate let tempCountCars = 1
     static fileprivate var tempCars = [CarModelSimulated]()
 
-    static func getCarsWithLocation(_ currentLocation: CLLocationCoordinate2D,
-                                    success: ([CarModel]) -> Void) {
+    func getCarsWithLocation(_ currentLocation: CLLocationCoordinate2D) -> Observable<[CarModel]> {
         
-        for car in tempCars {
-            car.addCoordinate(CoordinateGenerator.getCoordinate(car.lastCoordinateFromRealCoordinates?.coordinate, currentCoordinate: currentLocation, angle: car.angle))
-        }
-        
-        for _ in 0..<tempCountCars - tempCars.count {
-            let car = CarModelSimulated(uid: UUID().uuidString,
-                                        coordinate: nil,
-                                        angle: Double(arc4random()).truncatingRemainder(dividingBy: 360))
+        return Observable<[CarModel]>.create{ observer in
             
-            car.addCoordinate(CoordinateGenerator.getCoordinate(nil, currentCoordinate: currentLocation, angle: car.angle))
-            tempCars.append(car)
-        }
-        
-        for car in tempCars.enumerated().reversed() {
-            if let lastCoordinate = car.element.lastCoordinateFromRealCoordinates {
-                let currentLocation = CLLocation(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
-                let lastLocation = CLLocation(latitude: lastCoordinate.coordinate.latitude, longitude: lastCoordinate.coordinate.longitude)
-
-                if lastLocation.distance(from: currentLocation) > Double(CoordinateGenerator.distance) {
-                    tempCars.remove(at: car.offset)
+            for car in Loader.tempCars {
+                car.addCoordinate(CoordinateGenerator.getCoordinate(car.lastCoordinateFromRealCoordinates?.coordinate, currentCoordinate: currentLocation, angle: car.angle))
+            }
+            
+            for _ in 0..<Loader.tempCountCars - Loader.tempCars.count {
+                let car = CarModelSimulated(uid: UUID().uuidString,
+                                            coordinate: nil,
+                                            angle: Double(arc4random()).truncatingRemainder(dividingBy: 360))
+                
+                car.addCoordinate(CoordinateGenerator.getCoordinate(nil, currentCoordinate: currentLocation, angle: car.angle))
+                Loader.tempCars.append(car)
+            }
+            
+            for car in Loader.tempCars.enumerated().reversed() {
+                if let lastCoordinate = car.element.lastCoordinateFromRealCoordinates {
+                    let currentLocation = CLLocation(latitude: currentLocation.latitude, longitude: currentLocation.longitude)
+                    let lastLocation = CLLocation(latitude: lastCoordinate.coordinate.latitude, longitude: lastCoordinate.coordinate.longitude)
+                    
+                    if lastLocation.distance(from: currentLocation) > Double(CoordinateGenerator.distance) {
+                        Loader.tempCars.remove(at: car.offset)
+                    }
                 }
             }
+            
+            observer.on(.next(Loader.tempCars))
+            observer.on(.completed)
+            
+            return Disposables.create {}
         }
-        
-        success(tempCars)
     }
 }

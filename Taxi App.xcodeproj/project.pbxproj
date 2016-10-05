@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CF11476754BECF257D6960ED /* libPods-Taxi App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAAE603237D8927462CD57C /* libPods-Taxi App.a */; };
+		9FDB7991EF2FC0DABA2C9836 /* Pods_Taxi_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF8498476DF3E854C9E4E6C9 /* Pods_Taxi_App.framework */; };
 		EF4F87F11D867B73003ABA6A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F87F01D867B73003ABA6A /* AppDelegate.swift */; };
 		EF4F87F31D867B73003ABA6A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4F87F21D867B73003ABA6A /* MapViewController.swift */; };
 		EF4F87F61D867B73003ABA6A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4F87F41D867B73003ABA6A /* Main.storyboard */; };
@@ -47,9 +47,9 @@
 		EF4F88131D86E626003ABA6A /* InfoCarAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfoCarAnnotationView.swift; path = Helpers/InfoCarAnnotationView.swift; sourceTree = "<group>"; };
 		EF4F88151D86E633003ABA6A /* InfoCarAnnotationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InfoCarAnnotationView.xib; path = Helpers/InfoCarAnnotationView.xib; sourceTree = "<group>"; };
 		EF6A9F441D8FBE0D0016ABE6 /* Extrapolation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extrapolation.swift; sourceTree = "<group>"; };
+		EF8498476DF3E854C9E4E6C9 /* Pods_Taxi_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Taxi_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF851B751D93BCFA00A19A1E /* CarModelSimulated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarModelSimulated.swift; path = Models/CarModelSimulated.swift; sourceTree = "<group>"; };
 		EF851B781D9515E800A19A1E /* MapHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapHelper.swift; path = Helpers/MapHelper.swift; sourceTree = "<group>"; };
-		FDAAE603237D8927462CD57C /* libPods-Taxi App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Taxi App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF11476754BECF257D6960ED /* libPods-Taxi App.a in Frameworks */,
+				9FDB7991EF2FC0DABA2C9836 /* Pods_Taxi_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +76,7 @@
 		AB4B1CF8AAF2F7CB54EB0A6F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FDAAE603237D8927462CD57C /* libPods-Taxi App.a */,
+				EF8498476DF3E854C9E4E6C9 /* Pods_Taxi_App.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
