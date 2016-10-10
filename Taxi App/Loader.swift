@@ -12,12 +12,12 @@ import RxSwift
 
 class Loader: NSObject {
     
-    static fileprivate let tempCountCars = 30
+    static fileprivate let tempCountCars = 1
     static fileprivate var tempCars = [CarModelSimulated]()
 
-    func getCarsWithLocation(_ currentLocation: CLLocationCoordinate2D) -> Observable<CarModel> {
+    func getCarsWithLocation(_ currentLocation: CLLocationCoordinate2D) -> Observable<[CarModel]> {
         
-        return Observable<CarModel>.create{ observer in
+        return Observable<[CarModel]>.create{ observer in
             
             for car in Loader.tempCars {
                 car.addCoordinate(CoordinateGenerator.getCoordinate(car.lastCoordinateFromRealCoordinates?.coordinate, currentCoordinate: currentLocation, angle: car.angle))
@@ -43,10 +43,7 @@ class Loader: NSObject {
                 }
             }
             
-            for car in Loader.tempCars {
-                observer.on(.next(car))
-            }
-            
+            observer.on(.next(Loader.tempCars))
             observer.on(.completed)
             
             return Disposables.create {}
