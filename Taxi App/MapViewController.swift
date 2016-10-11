@@ -172,7 +172,7 @@ extension MapViewController: MKMapViewDelegate {
             
             let identifier = carPointAnnotationIdentifier
             
-            var annotationView = CarAnnotationView()
+            var annotationView : CarAnnotationView!
             if let anView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CarAnnotationView {
                 annotationView = anView
                 annotationView.annotation = annotation
