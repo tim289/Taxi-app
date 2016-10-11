@@ -12,11 +12,10 @@ import RxSwift
 
 class Loader: NSObject {
     
-    static fileprivate let tempCountCars = 1
+    static fileprivate let tempCountCars = 30
     static fileprivate var tempCars = [CarModelSimulated]()
 
     func getCarsWithLocation(_ currentLocation: CLLocationCoordinate2D) -> Observable<[CarModel]> {
-        
         return Observable<[CarModel]>.create{ observer in
             
             for car in Loader.tempCars {
@@ -42,9 +41,12 @@ class Loader: NSObject {
                     }
                 }
             }
-            
-            observer.on(.next(Loader.tempCars))
-            observer.on(.completed)
+                        
+            let dispatchTime = DispatchTime.now() + (Double(arc4random()) / Double(UINT32_MAX))
+            DispatchQueue.main.asyncAfter(deadline: dispatchTime, execute: {
+                observer.on(.next(Loader.tempCars))
+                observer.on(.completed)
+            })
             
             return Disposables.create {}
         }
